@@ -31,7 +31,7 @@ const getUsers = (request, response) => {
 
 const createUser = (request, response) => {
     const { username, email } = request.body;
-    console.log(request.body);
+
     pool.query('INSERT INTO account (username, email) VALUES ($1, $2)', [username, email])
         .then((res) => {
             response.status(201).send(`User added with ID: ${res.insertId}`);
@@ -44,6 +44,7 @@ const deleteUser = (request, response) => {
 
     pool.query('DELETE FROM account WHERE id = $1', [id])
         .then((res) => {
+            console.log(res);
             response.status(201).send(`User deleted with ID: ${id}`);
         })
         .catch(err => console.error('Error deleting user', err.stack));
